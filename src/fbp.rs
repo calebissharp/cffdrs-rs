@@ -509,7 +509,7 @@ pub fn fmc(
 /// Calculate length-to-breadth ratio
 ///
 /// * `wsv` - slope-adjusted wind speed (km/h) (see [slope_adjustment] to calculate this value)
-pub fn length_to_breath(fuel_type: FbpFuelType, wsv: f32) -> f32 {
+pub fn length_to_breadth(fuel_type: FbpFuelType, wsv: f32) -> f32 {
     match fuel_type {
         FbpFuelType::O1a | FbpFuelType::O1b => {
             if wsv >= 1.0 {
