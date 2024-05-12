@@ -1,7 +1,7 @@
 # cffdrs-rs
 
-![docs.rs](https://img.shields.io/docsrs/cffdrs)
-![Crates.io Version](https://img.shields.io/crates/v/cffdrs)
+[![docs.rs](https://img.shields.io/docsrs/cffdrs)](https://docs.rs/cffdrs)
+[![Crates.io Version](https://img.shields.io/crates/v/cffdrs)](https://crates.io/crates/cffdrs)
 
 Rust implementation of the Canadian Forest Fire Danger Rating System
 
