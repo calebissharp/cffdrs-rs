@@ -177,7 +177,12 @@ pub const fn cfl(fuel_type: FbpFuelType) -> f32 {
     }
 }
 
-pub fn rsi(fuel_type: FbpFuelType, isi: f32) -> f32 {
+/// Rate of spread index
+///
+/// * `isi` - Initial spread index
+/// * `pc` - Percent conifer (%)
+/// * `pdf` - Percent dead balsam fir (%)
+pub fn rsi(fuel_type: FbpFuelType, isi: f32, pc: f32, pdf: f32) -> f32 {
     match fuel_type {
         FbpFuelType::C1
         | FbpFuelType::C2
@@ -196,28 +201,20 @@ pub fn rsi(fuel_type: FbpFuelType, isi: f32) -> f32 {
             default_rsi_calc(params.a, params.b, params.c, isi)
         }
         FbpFuelType::M1 => {
-            let percent_conifer = 50.; // TODO: get from fuel layer?
-            let percent_hardwood = 50.; // TODO: get from fuel layer?
-            (percent_conifer / 100.) * (rsi(FbpFuelType::C2, isi))
-                + (percent_hardwood / 100.) * (rsi(FbpFuelType::D1, isi))
+            (pc / 100.) * (rsi(FbpFuelType::C2, isi, pc, pdf))
+                + ((100. - pc) / 100.) * (rsi(FbpFuelType::D1, isi, pc, pdf))
         }
         FbpFuelType::M2 => {
-            let percent_conifer = 50.; // TODO: get from fuel layer?
-            let percent_hardwood = 50.; // TODO: get fomr fuel layer?
-            (percent_conifer / 100.) * (rsi(FbpFuelType::C2, isi))
-                + 0.2 * (percent_hardwood / 100.) * (rsi(FbpFuelType::D1, isi))
+            (pc / 100.) * (rsi(FbpFuelType::C2, isi, pc, pdf))
+                + 0.2 * ((100. - pc) / 100.) * (rsi(FbpFuelType::D1, isi, pc, pdf))
         }
         FbpFuelType::M3 => {
-            // Percent dead balsam fir
-            let pdf = 50.; // TODO: get from fuel layer?
             let a = 170. * consts::E.powf(-35. / pdf);
             let b = 0.082 * consts::E.powf(-36. / pdf);
             let c = 1.698 - 0.00303 * pdf;
             default_rsi_calc(a, b, c, isi)
         }
         FbpFuelType::M4 => {
-            // Percent dead balsam fir
-            let pdf = 50.; // TODO: get from fuel layer?
             let a = 140. * consts::E.powf(-33.5 / pdf);
             let b = 0.0404;
             let c = 3.02 * consts::E.powf(-0.00714 * pdf);
@@ -238,7 +235,24 @@ fn rso(csi: f32, sfc: f32) -> f32 {
     csi / (300. * sfc)
 }
 
-fn buildup_effect(fuel_type: FbpFuelType, bui: f32) -> f32 {
+/// Calculate the buildup effect on fire spread rate
+///
+/// * `bui` - Buildup index value
+///
+/// Returns the buildup effect
+///
+/// ```
+/// # use cffdrs::fbp::{buildup_effect, FbpFuelType};
+/// # {
+/// let bui = 13.5;
+/// let buildup_effect = buildup_effect(FbpFuelType::C3, bui);
+/// assert_eq!(buildup_effect, 0.43453118);
+/// # }
+///
+/// assert_eq!(buildup_effect(FbpFuelType::O1a, 10.8), 1.);
+/// assert_eq!(buildup_effect(FbpFuelType::S3, 13.5), 0.54799676);
+/// ```
+pub fn buildup_effect(fuel_type: FbpFuelType, bui: f32) -> f32 {
     let bui_avg: f32 = match fuel_type {
         FbpFuelType::C1 => 72.,
         FbpFuelType::C2 => 64.,
@@ -302,6 +316,9 @@ pub struct ExtendedRateOfSpread {
     pub rso: f32,
 }
 
+/// Rate of spread
+///
+/// See [rate_of_spread]
 pub fn ros_extended(
     fuel_type: FbpFuelType,
     isi: f32,
@@ -313,9 +330,9 @@ pub fn ros_extended(
     cc: f32,
     cbh: f32,
 ) -> ExtendedRateOfSpread {
-    let rsi = rsi(fuel_type, isi);
+    let rsi = rsi(fuel_type, isi, pc, pdf);
 
-    let cf = if cc > 58.8 {
+    let cf = if cc < 58.8 {
         0.005 * (consts::E.powf(0.061 * cc) - 1.)
     } else {
         0.176 + 0.02 * (cc - 58.8)
@@ -338,12 +355,8 @@ pub fn ros_extended(
     // Crown fire spread rate (m/min)
     let rsc = match fuel_type {
         FbpFuelType::C6 => {
-            // Verage foliar moisture effect
+            // Average foliar moisture effect
             let fme_avg = 0.778;
-            // Crown flame temperature (degrees K)
-            let tt = 1500. - 2.75 * fmc;
-            // Head of ignition (kJ/kg)
-            let h = 460. + 25.9 * fmc;
             let fme = (1.5 - 0.00275 * fmc).powf(4.0) / (460. + (25.9 * fmc)) * 1000.;
             Some(60. * (1. - consts::E.powf(-0.0497 * isi)).powf(1.0) * (fme / fme_avg))
         }
@@ -381,17 +394,42 @@ pub fn ros_extended(
 
 /// Calculate fire rate of spread
 ///
-/// * `isi` - Initial spread index
+/// * `isi` - Initial spread index (See [initial_spread_index] to calculate this value)
 /// * `bui` - Buildup index
 /// * `fmc` - Foliar moisture content
 /// * `sfc` - Surface fuel consumption
 /// * `pc` - Percent confier
 /// * `pdf` - Percent dead balsam fir
-/// * `cc` - Degree of curing
+/// * `cc` - Degree of curing (usually a constant)
 /// * `cbh` - Crown base height
 ///
-/// Returns back fire rate of spread (m/min)
-pub fn ros(
+/// Returns fire rate of spread (m/min)
+///
+/// # Examples
+///
+/// ```
+/// # use cffdrs::fbp::{FbpFuelType, rate_of_spread};
+/// let isi = 120.6;
+/// let bui = 437.4;
+/// let fmc = 0.0;
+/// let sfc = 0.0;
+/// let pc = 0.0;
+/// let pdf = 0.0;
+/// let cc = 0.0;
+/// let cbh = 0.0;
+/// let ros = rate_of_spread(FbpFuelType::C3, isi, bui, fmc, sfc, pc, pdf, cc, cbh);
+/// assert_eq!(ros, 132.34134);
+///
+/// assert_eq!(
+///     rate_of_spread(FbpFuelType::C6, 277.2, 656.1, 218.7, 6561., 81., 81., 54., 72.9),
+///     35.309303
+/// );
+/// assert_eq!(
+///     rate_of_spread(FbpFuelType::O1a, 6.3, 218.7, 437.4, 19683., 54., 81., 54., 72.9),
+///     2.1900055
+/// );
+/// ```
+pub fn rate_of_spread(
     fuel_type: FbpFuelType,
     isi: f32,
     bui: f32,
@@ -448,7 +486,7 @@ pub fn bros(
     // ISI associated with the back fire spread rate
     let bisi = 0.208 * bfw * ff;
 
-    ros(fuel_type, bisi, bui, fmc, sfc, pc, pdf, cc, cbh)
+    rate_of_spread(fuel_type, bisi, bui, fmc, sfc, pc, pdf, cc, cbh)
 }
 
 /// Calculate ROS at angle theta
@@ -567,7 +605,7 @@ pub fn slope_adjustment(
     let isz = initial_spread_index(ffmc, 0.);
 
     // Surface spread rate with 0 wind on level ground
-    let rsz = ros(fuel_type, isz, -1., fmc, sfc, pc, pdf, cc, cbh);
+    let rsz = rate_of_spread(fuel_type, isz, -1., fmc, sfc, pc, pdf, cc, cbh);
 
     let rsf = rsz * sf;
 
@@ -607,7 +645,19 @@ pub fn slope_adjustment(
 /// * `ws` - Wind speed (km/h)
 ///
 /// Returns ISI
-fn initial_spread_index(ffmc: f32, ws: f32) -> f32 {
+///
+/// ```
+/// # use cffdrs::fbp::initial_spread_index;
+/// let isi = initial_spread_index(0.6, 0.0);
+/// assert_eq!(isi, 2.9864071e-9);
+///
+/// assert_eq!(initial_spread_index(9.6, 0.0), 1.0478607e-6);
+/// assert_eq!(initial_spread_index(26.4, 24.3), 0.0040652887);
+/// assert_eq!(initial_spread_index(58.8, 24.3), 1.2853143);
+/// assert_eq!(initial_spread_index(7.2, 48.6), 3.0496415e-6);
+/// assert_eq!(initial_spread_index(39.3, 72.9), 1.1899886);
+/// ````
+pub fn initial_spread_index(ffmc: f32, ws: f32) -> f32 {
     // Moisture content
     let fm = 147.27723 * (101. - ffmc) / (59.5 + ffmc);
 
