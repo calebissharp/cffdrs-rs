@@ -1,7 +1,12 @@
 [package]
-name = "cffdrs-rs"
+name = "cffdrs"
+description = "Rust implementation of the Canadian Forest Fire Danger Rating System"
 version = "0.1.0"
 edition = "2021"
+authors = ["Caleb Sharp <me@calebissharp.com>"]
+repository = "https://github.com/calebissharp/cffdrs-rs"
+license = "MIT"
+keywords = ["cffdrs", "fwi", "fbp", "wildfire"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
