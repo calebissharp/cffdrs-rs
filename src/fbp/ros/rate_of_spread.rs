@@ -123,7 +123,6 @@ pub fn rate_of_spread_extended(
     cc: f64,
     cbh: f64,
 ) -> ExtendedRateOfSpread {
-    println!("type: {:?}", fuel_type);
     let rsi = rsi(fuel_type, isi, pc, pdf);
 
     let cf = if cc < 58.8 {
