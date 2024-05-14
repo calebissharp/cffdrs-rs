@@ -1,6 +1,6 @@
 use std::f64::consts;
 
-use super::{buildup_effect, crown_fraction_burned, FbpFuelType};
+use crate::fbp::{buildup_effect, crown_fraction_burned, FbpFuelType};
 
 pub struct RateOfSpreadParams {
     pub a: f64,
@@ -18,7 +18,8 @@ fn default_rsi_calc(a: f64, b: f64, c: f64, isi: f64) -> f64 {
     a * (1. - consts::E.powf(-b * isi)).powf(c)
 }
 
-pub fn rate_of_spread_params(fuel_type: FbpFuelType, pdf: f64) -> RateOfSpreadParams {
+/// Fuel type-specific coefficients for rate of spread
+pub fn rate_of_spread_params(fuel_type: FbpFuelType) -> RateOfSpreadParams {
     match fuel_type {
         FbpFuelType::C1 => RateOfSpreadParams::new(90., 0.0649, 4.5),
         FbpFuelType::C2 => RateOfSpreadParams::new(110., 0.0282, 1.5),
@@ -44,7 +45,7 @@ pub fn rate_of_spread_params(fuel_type: FbpFuelType, pdf: f64) -> RateOfSpreadPa
 /// * `isi` - Initial spread index
 /// * `pc` - Percent conifer (%)
 /// * `pdf` - Percent dead balsam fir (%)
-pub fn rsi(fuel_type: FbpFuelType, isi: f64, pc: f64, pdf: f64) -> f64 {
+fn rsi(fuel_type: FbpFuelType, isi: f64, pc: f64, pdf: f64) -> f64 {
     match fuel_type {
         FbpFuelType::C1
         | FbpFuelType::C2
@@ -58,7 +59,7 @@ pub fn rsi(fuel_type: FbpFuelType, isi: f64, pc: f64, pdf: f64) -> f64 {
         | FbpFuelType::S3
         | FbpFuelType::O1a
         | FbpFuelType::O1b => {
-            let params = rate_of_spread_params(fuel_type, pdf);
+            let params = rate_of_spread_params(fuel_type);
             default_rsi_calc(params.a, params.b, params.c, isi)
         }
         FbpFuelType::M1 => {
@@ -70,13 +71,13 @@ pub fn rsi(fuel_type: FbpFuelType, isi: f64, pc: f64, pdf: f64) -> f64 {
                 + 0.2 * ((100. - pc) / 100.) * (rsi(FbpFuelType::D1, isi, pc, pdf))
         }
         FbpFuelType::M3 => {
-            let params_100 = rate_of_spread_params(fuel_type, 100.);
+            let params_100 = rate_of_spread_params(fuel_type);
             let rsi_100 = default_rsi_calc(params_100.a, params_100.b, params_100.c, isi);
 
             (pdf / 100.) * rsi_100 + (1. - (pdf / 100.)) * rsi(FbpFuelType::D1, isi, pc, pdf)
         }
         FbpFuelType::M4 => {
-            let params_100 = rate_of_spread_params(fuel_type, 100.);
+            let params_100 = rate_of_spread_params(fuel_type);
             let rsi_100 = default_rsi_calc(params_100.a, params_100.b, params_100.c, isi);
 
             (pdf / 100.) * rsi_100 + 0.2 * (1. - pdf / 100.) * rsi(FbpFuelType::D1, isi, pc, pdf)
@@ -108,10 +109,10 @@ pub struct ExtendedRateOfSpread {
     pub rso: f64,
 }
 
-/// Rate of spread
+/// Rate of spread calculation, returning ROS, as well as CFB, CSI and RSO
 ///
-/// See [rate_of_spread()]
-pub fn ros_extended(
+/// See [rate_of_spread()] for a more information
+pub fn rate_of_spread_extended(
     fuel_type: FbpFuelType,
     isi: f64,
     bui: f64,
@@ -187,7 +188,7 @@ pub fn ros_extended(
 
 /// Calculate fire rate of spread
 ///
-/// * `isi` - Initial spread index (See [super::fwi::initial_spread_index()] to calculate this value)
+/// * `isi` - Initial spread index (See [crate::fwi::initial_spread_index()] to calculate this value)
 /// * `bui` - Buildup index
 /// * `fmc` - Foliar moisture content
 /// * `sfc` - Surface fuel consumption
@@ -237,106 +238,7 @@ pub fn rate_of_spread(
     cc: f64,
     cbh: f64,
 ) -> f64 {
-    ros_extended(fuel_type, isi, bui, fmc, sfc, pc, pdf, cc, cbh).ros
-}
-
-/// Calculate flank rate of spread (FROS)
-///
-/// * `ros` - fire rate of spread (m/min)
-/// * `bros` - back fire rate of spread (m/min)
-/// * `lb` - length to breadth ratio (See [length_to_breadth()])
-///
-/// Returns flank fire spread rate (m/min)
-///
-/// # Examples
-///
-/// ```
-/// # use cffdrs::fbp::{flank_rate_of_spread};
-/// let ros = 332.91;
-/// let bros = 0.0;
-/// let lb = -1.;
-///
-/// let fros = flank_rate_of_spread(ros, bros, lb);
-/// assert_eq!(fros, -166.455);
-///
-/// assert_eq!(flank_rate_of_spread(393.66, 196.83, -1.), -295.245);
-/// assert_eq!(flank_rate_of_spread(274.59, 393.66, 0.62), 538.9112903225806);
-/// ```
-pub fn flank_rate_of_spread(ros: f64, bros: f64, lb: f64) -> f64 {
-    (ros + bros) / lb / 2.
-}
-
-/// Calculate back fire rate of spread
-///
-/// * `ffmc` - Fine fuel moisture code
-/// * `bui` - Buildup index
-/// * `wsv` - Wind speed vector
-/// * `fmc` - Foliar moisture content
-/// * `sfc` - Surface fuel consumption
-/// * `pc` - Percent confier
-/// * `pdf` - Percent dead balsam fir
-/// * `cc` - Degree of curing
-/// * `cbh` - Crown base height
-///
-/// Returns back fire rate of spread (m/min)
-pub fn bros(
-    fuel_type: FbpFuelType,
-    ffmc: f64,
-    bui: f64,
-    wsv: f64,
-    fmc: f64,
-    sfc: f64,
-    pc: f64,
-    pdf: f64,
-    cc: f64,
-    cbh: f64,
-) -> f64 {
-    let m = 147.27723 * (101. - ffmc) / (59.5 + ffmc);
-    let ff = 91.9 * consts::E.powf(-0.1386 * m) + (1. + (m.powf(5.31) / 4.93e7));
-    // Back fire wind function
-    let bfw = consts::E.powf(0.05039 * wsv);
-    // ISI associated with the back fire spread rate
-    let bisi = 0.208 * bfw * ff;
-
-    rate_of_spread(fuel_type, bisi, bui, fmc, sfc, pc, pdf, cc, cbh)
-}
-
-/// Calculate rate of spread (ROS) at the perimeter of an elliptically shaped fire
-/// at angle theta
-///
-/// `ros` - Fire rate of spread (see [rate_of_spread])
-/// `fros` - Flank fire rate of spread (see [flank_rate_of_spread])
-/// `bros` - Back fire rate of spread
-/// `theta` - Angle in degrees, 0 = N, 90 = E, etc
-///
-/// Returns rate of spread at angle theta (m/min)
-///
-/// # Examples
-/// ```
-/// # use cffdrs::fbp::{rate_of_spread_at_theta};
-/// let ros = 34.02;
-/// let fros = 393.66;
-/// let bros = 590.49;
-/// let theta = 33.66;
-///
-/// let ros_east = rate_of_spread_at_theta(ros, fros, bros, theta);
-/// assert_eq!(ros_east, 5.92207724376657);
-///
-/// assert_eq!(rate_of_spread_at_theta(464.13, 196.83, 0.0, 230.49), 1145.7899421765774);
-/// assert_eq!(rate_of_spread_at_theta(349.92, 590.49, 393.66, -163.17), 354.1664343281862);
-/// assert_eq!(rate_of_spread_at_theta(58.32, 0.0, 590.49, -360.), -168.618286063626);
-/// ```
-pub fn rate_of_spread_at_theta(ros: f64, fros: f64, bros: f64, theta: f64) -> f64 {
-    let c1 = theta.cos();
-    let s1 = theta.sin();
-    let c1 = if c1 == 0. { (theta + 0.001).cos() } else { c1 };
-
-    // Eq. 94 (https://cfs.nrcan.gc.ca/pubwarehouse/pdfs/31414.pdf)
-
-    ((ros - bros) / (2. * c1) + ((ros + bros) / (2. * c1)))
-        * ((fros * c1 * (fros.powi(2) * c1.powi(2) + (ros * bros) * s1.powi(2)).sqrt()
-            - (((ros.powi(2) - bros.powi(2)) / 4.) * s1.powi(2)))
-            / (fros.powi(2) * c1.powi(2) + ((ros + bros) / 2.0).powi(2) * s1.powi(2)))
+    rate_of_spread_extended(fuel_type, isi, bui, fmc, sfc, pc, pdf, cc, cbh).ros
 }
 
 #[cfg(test)]

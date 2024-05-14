@@ -1,6 +1,8 @@
-use crate::{fbp::rate_of_spread, fwi::initial_spread_index};
-
-use super::{rate_of_spread_params, FbpFuelType};
+use crate::{
+    fbp::ros::{rate_of_spread, rate_of_spread_params},
+    fbp::FbpFuelType,
+    fwi::initial_spread_index,
+};
 
 use std::f64::consts;
 
@@ -122,7 +124,7 @@ fn isf(
     rsf_m3: f64,
     rsf_m4: f64,
 ) -> f64 {
-    let params = rate_of_spread_params(fuel_type, pdf);
+    let params = rate_of_spread_params(fuel_type);
     let a = params.a;
     let b = params.b;
     let c = params.c;
@@ -253,7 +255,7 @@ mod tests {
         let fixture = std::fs::File::open("./tests/fixtures/slope_adjustment.csv")?;
         let mut rdr = csv::Reader::from_reader(fixture);
 
-        for (i, result) in rdr.deserialize().enumerate() {
+        for result in rdr.deserialize() {
             let record: SlopeAdjustmentRow = result?;
             let (raz, wsv) = slope_adjustment(
                 record.fuel_type,
