@@ -202,7 +202,7 @@ pub fn rate_of_spread_extended(
 /// # Examples
 ///
 /// ```
-/// # use cffdrs::fbp::{FbpFuelType, rate_of_spread};
+/// # use cffdrs::fbp::{FbpFuelType, ros::rate_of_spread};
 /// let isi = 120.6;
 /// let bui = 437.4;
 /// let fmc = 0.0;

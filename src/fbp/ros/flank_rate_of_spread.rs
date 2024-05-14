@@ -9,7 +9,7 @@
 /// # Examples
 ///
 /// ```
-/// # use cffdrs::fbp::{flank_rate_of_spread};
+/// # use cffdrs::fbp::ros::{flank_rate_of_spread};
 /// let ros = 332.91;
 /// let bros = 0.0;
 /// let lb = -1.;

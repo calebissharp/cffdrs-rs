@@ -10,7 +10,7 @@
 ///
 /// # Examples
 /// ```
-/// # use cffdrs::fbp::{rate_of_spread_at_theta};
+/// # use cffdrs::fbp::ros::{rate_of_spread_at_theta};
 /// let ros = 34.02;
 /// let fros = 393.66;
 /// let bros = 590.49;
