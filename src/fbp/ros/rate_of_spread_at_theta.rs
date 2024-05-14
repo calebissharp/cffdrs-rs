@@ -35,3 +35,37 @@ pub fn rate_of_spread_at_theta(ros: f64, fros: f64, bros: f64, theta: f64) -> f6
             - (((ros.powi(2) - bros.powi(2)) / 4.) * s1.powi(2)))
             / (fros.powi(2) * c1.powi(2) + ((ros + bros) / 2.0).powi(2) * s1.powi(2)))
 }
+
+#[cfg(test)]
+mod tests {
+    use crate::test_util::precision_f64;
+
+    use super::*;
+
+    #[derive(Debug, serde::Deserialize)]
+    struct TestRow {
+        ros: f64,
+        fros: f64,
+        bros: f64,
+        theta: f64,
+        ros_theta: f64,
+    }
+
+    #[test]
+    fn test_rate_of_spread() -> Result<(), Box<dyn std::error::Error>> {
+        let fixture = std::fs::File::open("./tests/fixtures/ros_at_theta.csv")?;
+        let mut rdr = csv::Reader::from_reader(fixture);
+
+        for result in rdr.deserialize() {
+            let record: TestRow = result?;
+            let ros = rate_of_spread_at_theta(record.ros, record.fros, record.bros, record.theta);
+
+            assert_eq!(precision_f64(ros, 4), record.ros_theta);
+        }
+
+        Ok(())
+    }
+
+    #[test]
+    fn test_rate_of_spread_at_theta() {}
+}
