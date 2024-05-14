@@ -8,10 +8,13 @@ repository = "https://github.com/calebissharp/cffdrs-rs"
 license = "GPL-2.0-only"
 keywords = ["cffdrs", "fwi", "fbp", "wildfire"]
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
 [dependencies]
 serde = { version = "1.0.201", features = ["serde_derive"], optional = true }
+
+[dev-dependencies]
+csv = "1.3.0"
+float-cmp = "0.9.0"
+is_close = "0.1.3"
 
 [features]
 default = ["serde"]
