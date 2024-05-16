@@ -94,7 +94,7 @@ fn csi(fmc: f64, cbh: f64) -> f64 {
 }
 
 /// Surface fire rate of spread
-fn rso(csi: f64, sfc: f64) -> f64 {
+pub fn rso(csi: f64, sfc: f64) -> f64 {
     csi / (300. * sfc)
 }
 
