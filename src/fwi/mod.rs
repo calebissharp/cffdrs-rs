@@ -1,8 +1,10 @@
 //! Fire Weather Index (FWI) System
 
+mod bui;
 mod hffmc;
 mod isi;
 
+pub use bui::*;
 pub use hffmc::*;
 pub use isi::*;
 
