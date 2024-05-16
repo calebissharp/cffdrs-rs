@@ -52,7 +52,7 @@ mod tests {
     }
 
     #[test]
-    fn test_rate_of_spread() -> Result<(), Box<dyn std::error::Error>> {
+    fn test_rate_of_spread_at_theta() -> Result<(), Box<dyn std::error::Error>> {
         let fixture = std::fs::File::open("./tests/fixtures/ros_at_theta.csv")?;
         let mut rdr = csv::Reader::from_reader(fixture);
 
@@ -65,7 +65,4 @@ mod tests {
 
         Ok(())
     }
-
-    #[test]
-    fn test_rate_of_spread_at_theta() {}
 }

@@ -38,7 +38,7 @@ mod tests {
     use crate::test_util::precision_f64;
 
     #[derive(Debug, serde::Deserialize)]
-    struct IsiRow {
+    struct TestRow {
         ffmc: f64,
         ws: f64,
         isi: f64,
@@ -50,7 +50,7 @@ mod tests {
         let mut rdr = csv::Reader::from_reader(fixture);
 
         for result in rdr.deserialize() {
-            let record: IsiRow = result?;
+            let record: TestRow = result?;
             let isi = initial_spread_index(record.ffmc, record.ws);
 
             assert_eq!(precision_f64(isi, 4), record.isi);

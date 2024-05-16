@@ -233,7 +233,7 @@ mod tests {
     use crate::test_util::precision_f64;
 
     #[derive(Debug, serde::Deserialize)]
-    struct SlopeAdjustmentRow {
+    struct TestRow {
         fuel_type: FbpFuelType,
         ffmc: f64,
         ws: f64,
@@ -256,7 +256,7 @@ mod tests {
         let mut rdr = csv::Reader::from_reader(fixture);
 
         for result in rdr.deserialize() {
-            let record: SlopeAdjustmentRow = result?;
+            let record: TestRow = result?;
             let (raz, wsv) = slope_adjustment(
                 record.fuel_type,
                 record.ffmc,

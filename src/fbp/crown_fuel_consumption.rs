@@ -41,7 +41,7 @@ mod tests {
     }
 
     #[test]
-    fn test_fire_intensity() -> Result<(), Box<dyn std::error::Error>> {
+    fn test_crown_fuel_consumption() -> Result<(), Box<dyn std::error::Error>> {
         let fixture = std::fs::File::open("./tests/fixtures/crown_fuel_consumption.csv")?;
         let mut rdr = csv::Reader::from_reader(fixture);
 

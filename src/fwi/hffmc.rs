@@ -76,7 +76,7 @@ mod tests {
     }
 
     #[test]
-    fn test_initial_spread_index() -> Result<(), Box<dyn std::error::Error>> {
+    fn test_hourly_fine_fuel_moisture_code() -> Result<(), Box<dyn std::error::Error>> {
         let fixture = std::fs::File::open("./tests/fixtures/hffmc.csv")?;
         let mut rdr = csv::Reader::from_reader(fixture);
 
