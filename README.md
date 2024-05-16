@@ -23,3 +23,6 @@ Forestry Canada. 1992. Development and structure of the Canadian Forest Fire Beh
 
 Wang, X.; Wotton, M.; Cantin, A.; Parisien, M.; Anderson, K.; Moore, B.; Flannigan, M. 2017. cffdrs: An R package for the Canadian Forest Fire Danger Rating System. Ecological Processes 6(5): 11p.
 [https://github.com/cffdrs/cffdrs_r](https://github.com/cffdrs/cffdrs_r)
+
+Van Wagner, C.E.; Pickett, T.L. 1985. Equations and FORTRAN program for the Canadian Forest Fire Weather Index System. Canadian Forestry Service, Petawawa National Forestry Institute, Chalk River, Ontario. Forestry Technical Report 33. 18 p.
+[View PDF](https://cfs.nrcan.gc.ca/pubwarehouse/pdfs/19973.pdf)
