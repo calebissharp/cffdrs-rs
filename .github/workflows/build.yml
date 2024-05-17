@@ -16,9 +16,18 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: rustup toolchain install stable --profile minimal
+      - uses: taiki-e/install-action@nextest
       - name: Rust Cache
         uses: Swatinem/rust-cache@v2.7.3
       - name: Build
         run: cargo build --verbose
+      - name: Run doctests
+        run: cargo test --doc
       - name: Run tests
-        run: cargo test --verbose
+        run: cargo nextest run --profile ci
+      - name: Publish Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        if: always()
+        with:
+          files: |
+            target/nextest/ci/junit.xml
