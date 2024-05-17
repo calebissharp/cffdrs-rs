@@ -12,6 +12,10 @@ name: release-please
 jobs:
   release-please:
     runs-on: ubuntu-latest
+
+    outputs:
+      created: ${{ steps.release.outputs.release_created }}
+
     steps:
       - uses: googleapis/release-please-action@v4
         with:
