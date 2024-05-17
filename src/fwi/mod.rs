@@ -2,11 +2,13 @@
 
 mod bui;
 mod dc;
+mod dmc;
 mod hffmc;
 mod isi;
 
 pub use bui::*;
 pub use dc::*;
+pub use dmc::*;
 pub use hffmc::*;
 pub use isi::*;
 
