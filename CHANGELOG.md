@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.5.1](https://github.com/calebissharp/cffdrs-rs/compare/v0.5.0...v0.5.1) (2024-05-17)
+
+
+### Miscellaneous Chores
+
+* **main:** release 0.5.1 ([150392d](https://github.com/calebissharp/cffdrs-rs/commit/150392d475430d7e4a5b525aac9181be2f4e46fb))
+
+
+### Build System
+
+* add output to release-please job ([fd2109b](https://github.com/calebissharp/cffdrs-rs/commit/fd2109b33e1e8dcd66bd923844bfc706ba339bd3))
+
 ## [0.5.0](https://github.com/calebissharp/cffdrs-rs/compare/v0.4.1...v0.5.0) (2024-05-17)
 
 
