@@ -1,5 +1,6 @@
 pub mod fbp;
 pub mod fwi;
+pub mod weather;
 
 #[cfg(test)]
 pub mod test_util {

@@ -10,6 +10,8 @@ license = "GPL-2.0-only"
 keywords = ["cffdrs", "fwi", "fbp", "wildfire"]
 
 [dependencies]
+chrono = "0.4.38"
+geo = "0.28.0"
 serde = { version = "1.0.201", features = ["serde_derive"], optional = true }
 
 [dev-dependencies]
