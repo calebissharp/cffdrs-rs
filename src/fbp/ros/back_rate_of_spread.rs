@@ -36,3 +36,50 @@ pub fn back_rate_of_spread(
 
     rate_of_spread(fuel_type, bisi, bui, fmc, sfc, pc, pdf, cc, cbh)
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::test_util::precision_f64;
+
+    #[derive(Debug, serde::Deserialize)]
+    struct TestRow {
+        fuel_type: FbpFuelType,
+        ffmc: f64,
+        bui: f64,
+        wsv: f64,
+        fmc: f64,
+        sfc: f64,
+        pc: f64,
+        pdf: f64,
+        cc: f64,
+        cbh: f64,
+        bros: f64,
+    }
+
+    #[test]
+    fn test_back_rate_of_spread() -> Result<(), Box<dyn std::error::Error>> {
+        let fixture = std::fs::File::open("./tests/fixtures/back_rate_of_spread.csv")?;
+        let mut rdr = csv::Reader::from_reader(fixture);
+
+        for result in rdr.deserialize() {
+            let record: TestRow = result?;
+            let bros = back_rate_of_spread(
+                record.fuel_type,
+                record.ffmc,
+                record.bui,
+                record.wsv,
+                record.fmc,
+                record.sfc,
+                record.pc,
+                record.pdf,
+                record.cc,
+                record.cbh,
+            );
+
+            assert_eq!(precision_f64(bros, 4), record.bros);
+        }
+
+        Ok(())
+    }
+}
