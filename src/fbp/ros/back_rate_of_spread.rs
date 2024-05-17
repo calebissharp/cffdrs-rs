@@ -28,9 +28,9 @@ pub fn back_rate_of_spread(
     cbh: f64,
 ) -> f64 {
     let m = 147.27723 * (101. - ffmc) / (59.5 + ffmc);
-    let ff = 91.9 * E.powf(-0.1386 * m) + (1. + (m.powf(5.31) / 4.93e7));
+    let ff = 91.9 * E.powf(-0.1386 * m) * (1. + m.powf(5.31) / 4.93e7);
     // Back fire wind function
-    let bfw = E.powf(0.05039 * wsv);
+    let bfw = E.powf(-0.05039 * wsv);
     // ISI associated with the back fire spread rate
     let bisi = 0.208 * bfw * ff;
 
