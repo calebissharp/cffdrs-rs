@@ -96,7 +96,7 @@ mod tests {
     }
 
     #[test]
-    fn test_drought_code() -> Result<(), Box<dyn std::error::Error>> {
+    fn test_duff_moisture_code() -> Result<(), Box<dyn std::error::Error>> {
         let fixture = std::fs::File::open("./tests/fixtures/dmc.csv")?;
         let mut rdr = csv::Reader::from_reader(fixture);
 
