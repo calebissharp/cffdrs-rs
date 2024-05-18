@@ -11,6 +11,7 @@ mod foliar_moisture_content;
 mod length_to_breadth;
 mod slope_adjustment;
 mod surface_fuel_consumption;
+mod system;
 mod total_fuel_consumption;
 
 pub mod ros;
@@ -26,6 +27,7 @@ pub use foliar_moisture_content::*;
 pub use length_to_breadth::*;
 pub use slope_adjustment::*;
 pub use surface_fuel_consumption::*;
+pub use system::*;
 pub use total_fuel_consumption::*;
 
 #[cfg(feature = "serde")]

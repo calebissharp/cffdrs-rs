@@ -7,6 +7,16 @@ Rust implementation of the Canadian Forest Fire Danger Rating System
 
 > Note: This crate is a work-in-progress and likely doesn't correctly implement all equations.
 
+## Instructions
+
+### Run tests
+
+Tests are run using [nextest](https://github.com/nextest-rs/nextest). You may need to install it first.
+
+```
+cargo nextest run
+```
+
 ## References
 
 Information Report GLC-X-10
