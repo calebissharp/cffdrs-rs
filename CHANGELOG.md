@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.0](https://github.com/calebissharp/cffdrs-rs/compare/v0.5.2...v0.6.0) (2024-05-18)
+
+
+### Features
+
+* add calculate_fbp function ([#13](https://github.com/calebissharp/cffdrs-rs/issues/13)) ([2aa21a4](https://github.com/calebissharp/cffdrs-rs/commit/2aa21a47a9676eae4d35eb229c936ffd848c1da8))
+
 ## [0.5.2](https://github.com/calebissharp/cffdrs-rs/compare/v0.5.1...v0.5.2) (2024-05-17)
 
 
