@@ -41,12 +41,12 @@ pub struct FbpValues {
 }
 
 pub struct FbpOptions {
-    elevation: Option<f64>,
-    date_of_minimum_fmc: Option<i32>,
+    pub elevation: Option<f64>,
+    pub date_of_minimum_fmc: Option<i32>,
     /// Slope (%)
-    slope: f64,
+    pub slope: f64,
     /// Slope azimuth (degrees)
-    aspect: f64,
+    pub aspect: f64,
 }
 
 impl Default for FbpOptions {
