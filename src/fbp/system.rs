@@ -139,6 +139,7 @@ pub fn calculate_fbp(
 
 #[cfg(test)]
 mod tests {
+    use approx::assert_ulps_eq;
     use chrono::prelude::*;
 
     use super::*;
@@ -181,16 +182,16 @@ mod tests {
         );
 
         // These values are from the BC Gov FBP calculator (slightly modified for floating point errors): https://psu.nrs.gov.bc.ca/fbp-go
-        assert_eq!(fbp.cfb, 0.9999982568944272);
-        assert_eq!(fbp.ros, 59.02036259012382);
-        assert_eq!(fbp.fi, 61913.09917582581);
-        assert_eq!(fbp.fros, 6.28955758552331);
-        assert_eq!(fbp.bros, 0.5030990617854207);
-        assert_eq!(fbp.wsv, 37.37715072152419);
-        assert_eq!(fbp.wsz, 0.8471315044464778);
-        assert_eq!(fbp.cfc, 0.7999986055155418);
-        assert_eq!(fbp.tfc, 3.4967083934399077);
-        assert_eq!(fbp.raz, 3.9887241580362707);
+        assert_ulps_eq!(fbp.cfb, 0.9999982568944272);
+        assert_ulps_eq!(fbp.ros, 59.02036259012382);
+        assert_ulps_eq!(fbp.fi, 61913.09917582581);
+        assert_ulps_eq!(fbp.fros, 6.28955758552331);
+        assert_ulps_eq!(fbp.bros, 0.5030990617854207);
+        assert_ulps_eq!(fbp.wsv, 37.37715072152419);
+        assert_ulps_eq!(fbp.wsz, 0.8471315044464778);
+        assert_ulps_eq!(fbp.cfc, 0.7999986055155418);
+        assert_ulps_eq!(fbp.tfc, 3.4967083934399077);
+        assert_ulps_eq!(fbp.raz, 3.9887241580362707);
 
         Ok(())
     }
