@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.1](https://github.com/calebissharp/cffdrs-rs/compare/v0.6.0...v0.6.1) (2024-05-19)
+
+
+### Bug Fixes
+
+* correct ros_at_theta calculation ([8d91101](https://github.com/calebissharp/cffdrs-rs/commit/8d911017be2b17f74ead6fa87e95e2647b4b8d6a))
+
 ## [0.6.0](https://github.com/calebissharp/cffdrs-rs/compare/v0.5.2...v0.6.0) (2024-05-18)
 
 
