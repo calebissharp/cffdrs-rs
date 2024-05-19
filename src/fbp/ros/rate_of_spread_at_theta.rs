@@ -16,14 +16,14 @@ use std::f64::consts::FRAC_PI_2;
 /// let ros = 34.02;
 /// let fros = 393.66;
 /// let bros = 590.49;
-/// let theta = 33.66;
+/// let theta = 90_f64.to_radians();
 ///
 /// let ros_east = rate_of_spread_at_theta(ros, fros, bros, theta);
-/// assert_eq!(ros_east, 5.92207724376657);
+/// assert_eq!(ros_east, 178.72808229830116);
 ///
-/// assert_eq!(rate_of_spread_at_theta(464.13, 196.83, 0.0, 230.49), 1145.7899421765774);
-/// assert_eq!(rate_of_spread_at_theta(349.92, 590.49, 393.66, -163.17), 354.1664343281862);
-/// assert_eq!(rate_of_spread_at_theta(58.32, 0.0, 590.49, -360.), -168.618286063626);
+/// assert_eq!(rate_of_spread_at_theta(464.13, 196.83, 0.0, 230.49_f64.to_radians()), 0.0);
+/// assert_eq!(rate_of_spread_at_theta(349.92, 590.49, 393.66, -163.17_f64.to_radians()), 403.5940759749405);
+/// assert_eq!(rate_of_spread_at_theta(58.32, 10.0, 590.49, -360_f64.to_radians()), 58.32000000000005);
 /// ```
 pub fn rate_of_spread_at_theta(ros: f64, fros: f64, bros: f64, theta: f64) -> f64 {
     let theta = if theta == FRAC_PI_2 || theta == 3. * FRAC_PI_2 {
