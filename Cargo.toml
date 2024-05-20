@@ -1,4 +1,5 @@
 [workspace]
+name = "cffdrs-rs"
 resolver = "2"
 
 members = ["crates/*"]
