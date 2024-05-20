@@ -1,6 +1,7 @@
 {
   "packages": {
     "crates/cffdrs": {}
+    "crates/msc-weather": {}
   },
   "plugins": ["cargo-workspace"],
   "release-type": "rust"
