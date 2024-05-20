@@ -1,6 +1,6 @@
 {
   "packages": {
-    "cffdrs": {}
+    "crates/cffdrs": {}
   },
   "plugins": ["cargo-workspace"],
   "release-type": "rust"
