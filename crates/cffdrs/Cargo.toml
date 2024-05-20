@@ -1,0 +1,27 @@
+[package]
+name = "cffdrs"
+description = "Rust implementation of the Canadian Forest Fire Danger Rating System"
+version = "0.6.1"
+edition = "2021"
+authors = ["Caleb Sharp <me@calebissharp.com>"]
+repository = "https://github.com/calebissharp/cffdrs-rs"
+documentation = "https://docs.rs/cffdrs/latest/cffdrs/"
+license = "GPL-2.0-only"
+keywords = ["cffdrs", "fwi", "fbp", "wildfire"]
+
+[dependencies]
+chrono = "0.4.38"
+geo = "0.28.0"
+julian = { version = "0.5.0", features = ["chrono"] }
+serde = { version = "1.0.202", features = ["serde_derive"], optional = true }
+
+[dev-dependencies]
+approx = "0.5.1"
+csv = "1.3.0"
+float-cmp = "0.9.0"
+is_close = "0.1.3"
+
+[features]
+default = ["serde"]
+serde = ["dep:serde"]
+

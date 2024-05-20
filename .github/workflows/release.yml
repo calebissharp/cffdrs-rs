@@ -1,7 +1,5 @@
 on:
   push:
-    branches:
-      - main
 
 permissions:
   contents: write
@@ -21,7 +19,8 @@ jobs:
         id: release
         with:
           token: ${{ secrets.RELEASE_PLEASE_TOKEN }}
-          release-type: rust
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json
   publish:
     name: Publish to crates.io
 
