@@ -1,0 +1,7 @@
+{
+  "packages": {
+    "cffdrs"
+  },
+  "plugins": ["cargo-workspace"],
+  "release-type": "rust"
+}
