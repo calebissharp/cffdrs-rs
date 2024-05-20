@@ -1,5 +1,7 @@
 [workspace]
-name = "cffdrs-rs"
 resolver = "2"
 
-members = ["crates/*"]
+members = [
+  "crates/cffdrs",
+  "crates/msc-weather",
+]
