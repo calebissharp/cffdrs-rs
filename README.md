@@ -13,9 +13,31 @@ Rust implementation of the Canadian Forest Fire Danger Rating System
 
 Tests are run using [nextest](https://github.com/nextest-rs/nextest). You may need to install it first.
 
-```
+```bash
+cargo install cargo-nextest --locked # Only if you haven't installed it yet
 cargo nextest run
 ```
+
+### Workspace tasks
+
+`cargo-workspace` is used to make managing the multiple crates in this repo easier.
+
+For example:
+
+```bash
+cargo install cargo-workspace --locked
+
+cargo ws publish # Publish new version of crates
+cargo ws create crates/my-new-crate # Create a new crate
+```
+
+## Releases
+
+Releases are managed via [`release-please`](https://github.com/googleapis/release-please). Most of the time, it should just automatically work.
+The only thing that may be required is to update `release-please-config.json` with any packages in order for `release-please` to keep track of it.
+
+> Note: it's required to use [Conventional commits](https://www.conventionalcommits.org/en/v1.0.0/) in order for `release-please` to properly
+> keep track of commits.
 
 ## References
 
