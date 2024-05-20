@@ -1,3 +1,4 @@
 {
-  "crates/cffdrs": "0.6.1"
+  "crates/cffdrs": "0.6.2",
+  "crates/msc-weather": "0.6.2"
 }
