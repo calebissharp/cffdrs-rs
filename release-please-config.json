@@ -1,6 +1,6 @@
 {
   "packages": {
-    "crates/cffdrs": {}
+    "crates/cffdrs": {},
     "crates/msc-weather": {}
   },
   "plugins": ["cargo-workspace"],
