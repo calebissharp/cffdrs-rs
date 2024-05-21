@@ -1,7 +1,7 @@
 [package]
 name = "msc-weather"
 description = "(Placeholder) Utilities for getting weather data from the Meteorological Service of Canada (MSC)"
-version = "0.6.2"
+version = "0.6.3"
 edition = "2021"
 authors = ["Caleb Sharp <me@calebissharp.com>"]
 license = "GPL-2.0-only"

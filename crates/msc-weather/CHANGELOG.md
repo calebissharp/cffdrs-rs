@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.3](https://github.com/calebissharp/cffdrs-rs/compare/msc-weather-v0.6.2...msc-weather-v0.6.3) (2024-05-21)
+
+
+### Bug Fixes
+
+* **manifest:** add missing cargo manifest fields ([c02b9ef](https://github.com/calebissharp/cffdrs-rs/commit/c02b9ef823852cc8fe744a46208ad984f4b47b39))
+
 ## 0.6.2 (2024-05-20)
 
 
