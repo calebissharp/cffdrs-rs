@@ -326,7 +326,7 @@ checksum = "6c8640c5d730cb13ebd907d8d04b52f55ac9a2eec55b440c8892f40d56c76c1d"
 
 [[package]]
 name = "msc-weather"
-version = "0.6.2"
+version = "0.6.3"
 
 [[package]]
 name = "num-traits"
