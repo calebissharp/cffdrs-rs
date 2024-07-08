@@ -13,7 +13,7 @@ keywords = ["cffdrs", "fwi", "fbp", "wildfire"]
 chrono = "0.4.38"
 geo = "0.28.0"
 julian = { version = "0.5.0", features = ["chrono"] }
-serde = { version = "1.0.203", features = ["serde_derive"], optional = true }
+serde = { version = "1.0.204", features = ["serde_derive"], optional = true }
 
 [dev-dependencies]
 approx = "0.5.1"
