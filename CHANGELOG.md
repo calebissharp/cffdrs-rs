@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.0](https://github.com/calebissharp/cffdrs-rs/compare/v0.6.3...v0.7.0) (2025-11-16)
+
+
+### Miscellaneous Chores
+
+* release 0.7.0 ([4db9cf6](https://github.com/calebissharp/cffdrs-rs/commit/4db9cf65dc58cb536f62d838be28687300d7f5fe))
+
 ## [0.6.3](https://github.com/calebissharp/cffdrs-rs/compare/v0.6.1...v0.6.3) (2024-12-10)
 
 
