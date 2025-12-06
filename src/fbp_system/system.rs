@@ -148,7 +148,7 @@ mod tests {
     use chrono::prelude::*;
 
     use super::*;
-    use crate::fwi::calculate_hourly;
+    use crate::fwi_system::calculate_hourly;
 
     #[test]
     fn test_calculate_fbp() -> Result<(), Box<dyn std::error::Error>> {

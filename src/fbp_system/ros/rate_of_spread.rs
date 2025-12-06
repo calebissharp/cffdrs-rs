@@ -188,7 +188,7 @@ pub fn rate_of_spread_extended(
 
 /// Calculate fire rate of spread
 ///
-/// * `isi` - Initial spread index (See [crate::fwi::initial_spread_index()] to calculate this value)
+/// * `isi` - Initial spread index (See [crate::fwi_system::initial_spread_index()] to calculate this value)
 /// * `bui` - Buildup index
 /// * `fmc` - Foliar moisture content
 /// * `sfc` - Surface fuel consumption
@@ -202,7 +202,7 @@ pub fn rate_of_spread_extended(
 /// # Examples
 ///
 /// ```
-/// # use cffdrs::fbp::{FbpFuelType, ros::rate_of_spread};
+/// # use cffdrs::fbp_system::{FbpFuelType, ros::rate_of_spread};
 /// let isi = 120.6;
 /// let bui = 437.4;
 /// let fmc = 0.0;

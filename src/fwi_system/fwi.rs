@@ -2,8 +2,8 @@ use std::f64::consts::E;
 
 /// Calculate fire weather index (FWI)
 ///
-/// * `isi` - Initial spread index (see [initial_spread_index](crate::fwi::initial_spread_index))
-/// * `bui` - Buildup index (see [buildup_index](crate::fwi::buildup_index))
+/// * `isi` - Initial spread index (see [initial_spread_index](crate::fwi_system::initial_spread_index))
+/// * `bui` - Buildup index (see [buildup_index](crate::fwi_system::buildup_index))
 pub fn fire_weather_index(isi: f64, bui: f64) -> f64 {
     let bb = if bui > 80. {
         0.1 * isi * (1000. / (25. + 108.64 / E.powf(0.023 * bui)))

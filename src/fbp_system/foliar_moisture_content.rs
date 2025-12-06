@@ -11,7 +11,7 @@ use std::f64::consts;
 /// # Examples
 ///
 /// ```
-/// # use cffdrs::fbp::{foliar_moisture_content};
+/// # use cffdrs::fbp_system::{foliar_moisture_content};
 ///
 /// let lat = -48.7;
 /// let long = 107.1;

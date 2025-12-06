@@ -1,7 +1,7 @@
 /// Fire intensity (FI)
 ///
 /// * `fc` - Fuel consumption, either surface or total (kg/m^2) - See
-///   [total_fuel_consumption()][crate::fbp::total_fuel_consumption()] and [surface_fuel_consumption()][crate::fbp::surface_fuel_consumption()]
+///   [total_fuel_consumption()][crate::fbp_system::total_fuel_consumption()] and [surface_fuel_consumption()][crate::fbp_system::surface_fuel_consumption()]
 /// * `ros` - Rate of spread (m/min)
 ///
 /// Returns FI (kW/m)

@@ -40,7 +40,7 @@ impl HourlyFwiValues {
 /// # Examples
 ///
 /// ```
-/// use cffdrs::fwi::calculate_hourly;
+/// use cffdrs::fwi_system::calculate_hourly;
 /// use cffdrs::weather::Weather;
 /// use chrono::prelude::*;
 ///

@@ -8,7 +8,7 @@ use std::f64::consts;
 /// Returns ISI
 ///
 /// ```
-/// # use cffdrs::fwi::initial_spread_index;
+/// # use cffdrs::fwi_system::initial_spread_index;
 /// let isi = initial_spread_index(0.6, 0.0);
 /// assert_eq!(isi, 2.9864200773278824e-9);
 ///

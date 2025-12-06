@@ -27,7 +27,7 @@ use std::f64::consts;
 /// # Examples
 ///
 /// ```
-/// # use cffdrs::fbp::{slope_adjustment, FbpFuelType};
+/// # use cffdrs::fbp_system::{slope_adjustment, FbpFuelType};
 /// let fuel_type = FbpFuelType::S2;
 /// let ffmc = 7.2;
 /// let ws = 145.8;
