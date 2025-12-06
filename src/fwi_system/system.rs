@@ -9,7 +9,11 @@ use super::{
     hourly_fine_fuel_moisture_code, initial_spread_index,
 };
 
+#[cfg(feature = "serde")]
+use serde::{Deserialize, Serialize};
+
 /// Hourly values for the FWI system
+#[cfg_attr(feature = "serde", derive(Deserialize, Serialize))]
 #[derive(Debug, Clone)]
 pub struct HourlyFwiValues {
     pub isi: f64,
