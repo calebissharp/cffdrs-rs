@@ -45,6 +45,7 @@ use std::f64::consts;
 /// assert_eq!(wsv, 153.91722882100433);
 /// assert_eq!(raz, 3.3124493937190334);
 /// ```
+#[allow(clippy::too_many_arguments)]
 pub fn slope_adjustment(
     fuel_type: FbpFuelType,
     ffmc: f64,
@@ -113,6 +114,7 @@ pub fn slope_adjustment(
 }
 
 /// Used just in [slope_adjustment()] function
+#[allow(clippy::too_many_arguments)]
 fn isf(
     fuel_type: FbpFuelType,
     rsf: f64,

@@ -112,6 +112,7 @@ pub struct ExtendedRateOfSpread {
 /// Rate of spread calculation, returning ROS, as well as CFB, CSI and RSO
 ///
 /// See [rate_of_spread()] for a more information
+#[allow(clippy::too_many_arguments)]
 pub fn rate_of_spread_extended(
     fuel_type: FbpFuelType,
     isi: f64,
@@ -226,6 +227,7 @@ pub fn rate_of_spread_extended(
 ///     48.52361319847542
 /// );
 /// ```
+#[allow(clippy::too_many_arguments)]
 pub fn rate_of_spread(
     fuel_type: FbpFuelType,
     isi: f64,
