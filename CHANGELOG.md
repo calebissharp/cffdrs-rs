@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.8.0](https://github.com/calebissharp/cffdrs-rs/compare/v0.7.0...v0.8.0) (2025-12-06)
+
+
+### Features
+
+* impl Debug and De/Serialize for FbpValues ([de81eac](https://github.com/calebissharp/cffdrs-rs/commit/de81eac610500af42feec7d48b219ec65ec6b132))
+* rename fwi and fbp mods to fwi_system/fbp_system ([#55](https://github.com/calebissharp/cffdrs-rs/issues/55)) ([aa2ab4e](https://github.com/calebissharp/cffdrs-rs/commit/aa2ab4ed16eb8adfb6b0de4c86654d5c30aa48dd))
+
 ## [0.7.0](https://github.com/calebissharp/cffdrs-rs/compare/v0.6.3...v0.7.0) (2025-11-16)
 
 
