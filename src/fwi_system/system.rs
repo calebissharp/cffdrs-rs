@@ -35,7 +35,7 @@ impl HourlyFwiValues {
 ///
 /// * `weather` - Hourly weather
 /// * `previous` - FWI values from the previous hour. Providing this argument will improve the
-/// accuracy of calculations
+///   accuracy of calculations
 ///
 /// # Examples
 ///

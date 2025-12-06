@@ -31,7 +31,7 @@ pub fn duff_moisture_code(
 ) -> f64 {
     let lat_adjustment = lat_adjustment.unwrap_or(true);
 
-    let index = (mon).max(1).min(12) - 1;
+    let index = (mon).clamp(1, 12) - 1;
 
     let temp = temp.max(-1.1);
 
@@ -42,7 +42,7 @@ pub fn duff_moisture_code(
             1.894 * (temp + 1.1) * (100. - rh) * ELL02[index] * 1e-4
         } else if lat <= -10. && lat > -30. {
             1.894 * (temp + 1.1) * (100. - rh) * ELL03[index] * 1e-4
-        } else if lat <= -30. && lat >= -90. {
+        } else if (-90. ..=-30.).contains(&lat) {
             1.894 * (temp + 1.1) * (100. - rh) * ELL04[index] * 1e-4
         } else if lat <= 10. && lat > -10. {
             1.894 * (temp + 1.1) * (100. - rh) * 9. * 1e-4
