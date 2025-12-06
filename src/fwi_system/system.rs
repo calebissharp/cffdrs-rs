@@ -25,13 +25,30 @@ pub struct HourlyFwiValues {
 }
 
 impl HourlyFwiValues {
-    const DEFAULT: HourlyFwiValues = HourlyFwiValues {
+    pub fn as_starting_values(&self) -> StartingFwiValues {
+        StartingFwiValues {
+            dc: self.dc,
+            dmc: self.dmc,
+            ffmc: self.ffmc,
+        }
+    }
+}
+
+/// Represents the starting values for further FWI calculations. Usually observed from the previous
+/// day. These are used for calculations that depend on their previous values
+#[cfg_attr(feature = "serde", derive(Deserialize, Serialize))]
+#[derive(Debug, Clone)]
+pub struct StartingFwiValues {
+    pub dc: f64,
+    pub dmc: f64,
+    pub ffmc: f64,
+}
+
+impl StartingFwiValues {
+    const DEFAULT: StartingFwiValues = StartingFwiValues {
         ffmc: 50.,
         dmc: 50.,
         dc: 50.,
-        isi: 0.,
-        bui: 0.,
-        fwi: 0.,
     };
 }
 
@@ -67,8 +84,11 @@ impl HourlyFwiValues {
 /// assert_eq!(fwi_values.bui, 55.44718193037011);
 /// assert_eq!(fwi_values.fwi, 2.2766000331952063);
 /// ```
-pub fn calculate_hourly(weather: &Weather, previous: Option<&HourlyFwiValues>) -> HourlyFwiValues {
-    let previous = previous.unwrap_or(&HourlyFwiValues::DEFAULT);
+pub fn calculate_hourly(
+    weather: &Weather,
+    previous: Option<&StartingFwiValues>,
+) -> HourlyFwiValues {
+    let previous = previous.unwrap_or(&StartingFwiValues::DEFAULT);
 
     let ffmc = hourly_fine_fuel_moisture_code(
         weather.temp,

@@ -148,7 +148,7 @@ mod tests {
     use chrono::prelude::*;
 
     use super::*;
-    use crate::fwi_system::calculate_hourly;
+    use crate::fwi_system::{calculate_hourly, StartingFwiValues};
 
     #[test]
     fn test_calculate_fbp() -> Result<(), Box<dyn std::error::Error>> {
@@ -165,13 +165,10 @@ mod tests {
 
         let fwi_values = calculate_hourly(
             &weather,
-            Some(&HourlyFwiValues {
-                isi: 3.,
+            Some(&StartingFwiValues {
                 dc: 60.,
                 dmc: 60.,
                 ffmc: 90.,
-                bui: 55.,
-                fwi: 10.,
             }),
         );
 
