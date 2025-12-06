@@ -9,6 +9,11 @@ use super::{
     slope_adjustment, surface_fuel_consumption, total_fuel_consumption, FbpFuelType,
 };
 
+#[cfg(feature = "serde")]
+use serde::{Deserialize, Serialize};
+
+#[cfg_attr(feature = "serde", derive(Deserialize, Serialize))]
+#[derive(Debug)]
 pub struct FbpValues {
     /// Crown fraction burned (0-1)
     pub cfb: f64,
