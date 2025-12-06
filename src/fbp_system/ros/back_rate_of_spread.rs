@@ -1,6 +1,6 @@
 use std::f64::consts::E;
 
-use crate::fbp::{ros::rate_of_spread, FbpFuelType};
+use crate::fbp_system::{ros::rate_of_spread, FbpFuelType};
 
 /// Calculate back fire rate of spread (BROS)
 ///

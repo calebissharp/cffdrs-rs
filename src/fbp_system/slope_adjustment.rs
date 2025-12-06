@@ -1,6 +1,6 @@
 use crate::{
-    fbp::ros::{rate_of_spread, rate_of_spread_params},
-    fbp::FbpFuelType,
+    fbp_system::ros::{rate_of_spread, rate_of_spread_params},
+    fbp_system::FbpFuelType,
     fwi::initial_spread_index,
 };
 

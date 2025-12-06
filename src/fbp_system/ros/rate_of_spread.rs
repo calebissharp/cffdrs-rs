@@ -1,6 +1,6 @@
 use std::f64::consts;
 
-use crate::fbp::{buildup_effect, crown_fraction_burned, FbpFuelType};
+use crate::fbp_system::{buildup_effect, crown_fraction_burned, FbpFuelType};
 
 pub struct RateOfSpreadParams {
     pub a: f64,
