@@ -78,7 +78,7 @@ pub fn calculate_fbp(
     let sd = 0.;
     let sh = 0.;
 
-    let julian_date = julian::Date::from(weather.time);
+    let julian_date = julian::Date::from(weather.time.naive_utc().date());
     let lat = weather.location.y();
     let long = weather.location.x();
 
