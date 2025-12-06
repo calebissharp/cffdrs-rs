@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.10.0](https://github.com/calebissharp/cffdrs-rs/compare/v0.9.0...v0.10.0) (2025-12-06)
+
+
+### Features
+
+* use new `InitialHourlyValues` struct for calculating fwi ([#57](https://github.com/calebissharp/cffdrs-rs/issues/57)) ([7c5ef39](https://github.com/calebissharp/cffdrs-rs/commit/7c5ef39e716c8e25e237af360e38665f68d9a4e5))
+
 ## [0.9.0](https://github.com/calebissharp/cffdrs-rs/compare/v0.8.0...v0.9.0) (2025-12-06)
 
 
