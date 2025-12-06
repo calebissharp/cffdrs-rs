@@ -1,7 +1,7 @@
 use crate::{
     fbp_system::ros::{rate_of_spread, rate_of_spread_params},
     fbp_system::FbpFuelType,
-    fwi::initial_spread_index,
+    fwi_system::initial_spread_index,
 };
 
 use std::f64::consts;
