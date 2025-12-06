@@ -29,6 +29,8 @@ jobs:
         run: cargo test --doc
       - name: Run tests
         run: cargo nextest run --profile ci
+      - name: Run clippy
+        run: cargo clippy --all-features
       - name: Publish Test Results
         uses: EnricoMi/publish-unit-test-result-action@v2
         if: always()

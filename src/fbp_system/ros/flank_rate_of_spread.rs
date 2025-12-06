@@ -2,14 +2,14 @@
 ///
 /// * `ros` - fire rate of spread (m/min)
 /// * `bros` - back fire rate of spread (m/min)
-/// * `lb` - length to breadth ratio (See [crate::fbp::length_to_breadth()])
+/// * `lb` - length to breadth ratio (See [crate::fbp_system::length_to_breadth()])
 ///
 /// Returns flank fire spread rate (m/min)
 ///
 /// # Examples
 ///
 /// ```
-/// # use cffdrs::fbp::ros::{flank_rate_of_spread};
+/// # use cffdrs::fbp_system::ros::{flank_rate_of_spread};
 /// let ros = 332.91;
 /// let bros = 0.0;
 /// let lb = -1.;

@@ -35,12 +35,12 @@ impl HourlyFwiValues {
 ///
 /// * `weather` - Hourly weather
 /// * `previous` - FWI values from the previous hour. Providing this argument will improve the
-/// accuracy of calculations
+///   accuracy of calculations
 ///
 /// # Examples
 ///
 /// ```
-/// use cffdrs::fwi::calculate_hourly;
+/// use cffdrs::fwi_system::calculate_hourly;
 /// use cffdrs::weather::Weather;
 /// use chrono::prelude::*;
 ///

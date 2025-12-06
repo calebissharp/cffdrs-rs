@@ -29,7 +29,7 @@ pub fn drought_code(
 
     let temp = temp.max(-2.8);
 
-    let index = (mon).max(1).min(12) - 1;
+    let index = (mon).clamp(1, 12) - 1;
 
     let pe = (0.36 * (temp + 2.8) + FL01[index]) / 2.;
 
@@ -50,7 +50,7 @@ pub fn drought_code(
     let ra = precip;
     let rw = 0.83 * ra - 1.27;
 
-    let smi = 800. * E.powf(-1. * prev_dc / 400.);
+    let smi = 800. * E.powf(-prev_dc / 400.);
 
     let dr0 = (prev_dc - 400. * (1. + 3.937 * rw / smi).ln()).max(0.);
 

@@ -1,6 +1,6 @@
 use std::f64::consts::E;
 
-use crate::fbp::{ros::rate_of_spread, FbpFuelType};
+use crate::fbp_system::{ros::rate_of_spread, FbpFuelType};
 
 /// Calculate back fire rate of spread (BROS)
 ///
@@ -15,6 +15,7 @@ use crate::fbp::{ros::rate_of_spread, FbpFuelType};
 /// * `cbh` - Crown base height
 ///
 /// Returns back fire rate of spread (m/min)
+#[allow(clippy::too_many_arguments)]
 pub fn back_rate_of_spread(
     fuel_type: FbpFuelType,
     ffmc: f64,

@@ -11,7 +11,7 @@ use std::f64::consts;
 /// # Examples
 ///
 /// ```
-/// # use cffdrs::fbp::{foliar_moisture_content};
+/// # use cffdrs::fbp_system::{foliar_moisture_content};
 ///
 /// let lat = -48.7;
 /// let long = 107.1;
@@ -54,7 +54,7 @@ pub fn foliar_moisture_content(
 
     if nd < 30. {
         85. + 0.0189 * nd.powi(2)
-    } else if nd >= 30. && nd < 50. {
+    } else if (30. ..50.).contains(&nd) {
         32.9 + 3.17 * nd - 0.0288 * nd.powi(2)
     } else {
         120.

@@ -8,7 +8,7 @@ use std::f64::consts::E;
 /// * `precip` - 1-hour rainfall (mm)
 /// * `previous_hffmc` - Previous hour's HFFMC
 /// * `timestep` - Timestep between calculations, in hours (default 1 hour, optional). Note that
-/// using a different value than the default may result in inaccuracies
+///   using a different value than the default may result in inaccuracies
 pub fn hourly_fine_fuel_moisture_code(
     temp: f64,
     rh: f64,

@@ -1,7 +1,7 @@
 use crate::{
-    fbp::ros::{rate_of_spread, rate_of_spread_params},
-    fbp::FbpFuelType,
-    fwi::initial_spread_index,
+    fbp_system::ros::{rate_of_spread, rate_of_spread_params},
+    fbp_system::FbpFuelType,
+    fwi_system::initial_spread_index,
 };
 
 use std::f64::consts;
@@ -27,7 +27,7 @@ use std::f64::consts;
 /// # Examples
 ///
 /// ```
-/// # use cffdrs::fbp::{slope_adjustment, FbpFuelType};
+/// # use cffdrs::fbp_system::{slope_adjustment, FbpFuelType};
 /// let fuel_type = FbpFuelType::S2;
 /// let ffmc = 7.2;
 /// let ws = 145.8;
@@ -45,6 +45,7 @@ use std::f64::consts;
 /// assert_eq!(wsv, 153.91722882100433);
 /// assert_eq!(raz, 3.3124493937190334);
 /// ```
+#[allow(clippy::too_many_arguments)]
 pub fn slope_adjustment(
     fuel_type: FbpFuelType,
     ffmc: f64,
@@ -113,6 +114,7 @@ pub fn slope_adjustment(
 }
 
 /// Used just in [slope_adjustment()] function
+#[allow(clippy::too_many_arguments)]
 fn isf(
     fuel_type: FbpFuelType,
     rsf: f64,

@@ -1,6 +1,6 @@
 use std::f64::consts;
 
-use crate::fbp::{buildup_effect, crown_fraction_burned, FbpFuelType};
+use crate::fbp_system::{buildup_effect, crown_fraction_burned, FbpFuelType};
 
 pub struct RateOfSpreadParams {
     pub a: f64,
@@ -112,6 +112,7 @@ pub struct ExtendedRateOfSpread {
 /// Rate of spread calculation, returning ROS, as well as CFB, CSI and RSO
 ///
 /// See [rate_of_spread()] for a more information
+#[allow(clippy::too_many_arguments)]
 pub fn rate_of_spread_extended(
     fuel_type: FbpFuelType,
     isi: f64,
@@ -187,7 +188,7 @@ pub fn rate_of_spread_extended(
 
 /// Calculate fire rate of spread
 ///
-/// * `isi` - Initial spread index (See [crate::fwi::initial_spread_index()] to calculate this value)
+/// * `isi` - Initial spread index (See [crate::fwi_system::initial_spread_index()] to calculate this value)
 /// * `bui` - Buildup index
 /// * `fmc` - Foliar moisture content
 /// * `sfc` - Surface fuel consumption
@@ -201,7 +202,7 @@ pub fn rate_of_spread_extended(
 /// # Examples
 ///
 /// ```
-/// # use cffdrs::fbp::{FbpFuelType, ros::rate_of_spread};
+/// # use cffdrs::fbp_system::{FbpFuelType, ros::rate_of_spread};
 /// let isi = 120.6;
 /// let bui = 437.4;
 /// let fmc = 0.0;
@@ -226,6 +227,7 @@ pub fn rate_of_spread_extended(
 ///     48.52361319847542
 /// );
 /// ```
+#[allow(clippy::too_many_arguments)]
 pub fn rate_of_spread(
     fuel_type: FbpFuelType,
     isi: f64,

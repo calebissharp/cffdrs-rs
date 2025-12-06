@@ -1,6 +1,6 @@
 use std::f64::consts::PI;
 
-use crate::{fwi::HourlyFwiValues, weather::Weather};
+use crate::{fwi_system::HourlyFwiValues, weather::Weather};
 
 use super::{
     crown_base_height, crown_fuel_consumption, crown_fuel_load, fire_intensity,
@@ -148,7 +148,7 @@ mod tests {
     use chrono::prelude::*;
 
     use super::*;
-    use crate::fwi::calculate_hourly;
+    use crate::fwi_system::calculate_hourly;
 
     #[test]
     fn test_calculate_fbp() -> Result<(), Box<dyn std::error::Error>> {

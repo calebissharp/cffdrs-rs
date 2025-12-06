@@ -4,7 +4,7 @@ use super::FbpFuelType;
 
 /// Calculate length-to-breadth ratio (LB)
 ///
-/// * `wsv` - slope-adjusted wind speed (km/h) (see [crate::fbp::slope_adjustment()] to calculate this value)
+/// * `wsv` - slope-adjusted wind speed (km/h) (see [crate::fbp_system::slope_adjustment()] to calculate this value)
 pub fn length_to_breadth(fuel_type: FbpFuelType, wsv: f64) -> f64 {
     match fuel_type {
         FbpFuelType::O1a | FbpFuelType::O1b => {

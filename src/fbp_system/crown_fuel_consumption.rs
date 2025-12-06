@@ -2,8 +2,8 @@ use super::FbpFuelType;
 
 /// Crown fuel consumption (CFC)
 ///
-/// * `cfl` - Crown fuel load (km/m^2) - See [crown_fuel_load()][crate::fbp::crown_fuel_load()]
-/// * `cfb` - Crown fraction burned (0-1) - See [crown_fraction_burned()][crate::fbp::crown_fraction_burned()]
+/// * `cfl` - Crown fuel load (km/m^2) - See [crown_fuel_load()][crate::fbp_system::crown_fuel_load()]
+/// * `cfb` - Crown fraction burned (0-1) - See [crown_fraction_burned()][crate::fbp_system::crown_fraction_burned()]
 /// * `pc` - Percent conifer (%)
 /// * `pdf` - Percent dead balsam fir (%)
 ///

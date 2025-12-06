@@ -3,8 +3,8 @@ use std::f64::consts::FRAC_PI_2;
 /// Calculate rate of spread (ROS) at the perimeter of an elliptically shaped fire
 /// at angle theta
 ///
-/// `ros` - Fire rate of spread (see [crate::fbp::ros::rate_of_spread()])
-/// `fros` - Flank fire rate of spread (see [crate::fbp::ros::flank_rate_of_spread()])
+/// `ros` - Fire rate of spread (see [crate::fbp_system::ros::rate_of_spread()])
+/// `fros` - Flank fire rate of spread (see [crate::fbp_system::ros::flank_rate_of_spread()])
 /// `bros` - Back fire rate of spread
 /// `theta` - Angle in radians from fire direction of spread
 ///
@@ -12,7 +12,7 @@ use std::f64::consts::FRAC_PI_2;
 ///
 /// # Examples
 /// ```
-/// # use cffdrs::fbp::ros::{rate_of_spread_at_theta};
+/// # use cffdrs::fbp_system::ros::{rate_of_spread_at_theta};
 /// let ros = 34.02;
 /// let fros = 393.66;
 /// let bros = 590.49;

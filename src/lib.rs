@@ -1,5 +1,5 @@
-pub mod fbp;
-pub mod fwi;
+pub mod fbp_system;
+pub mod fwi_system;
 pub mod weather;
 
 #[cfg(test)]

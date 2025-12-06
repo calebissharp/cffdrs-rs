@@ -28,8 +28,8 @@ pub fn surface_fuel_consumption(fuel_type: FbpFuelType, ffmc: f64, bui: f64) -> 
         }
         FbpFuelType::O1b | FbpFuelType::O1a => {
             // Grass fuel load (standard = 0.3km/m^2)
-            let gfl = 0.3;
-            gfl
+            
+            0.3
         }
         FbpFuelType::S1 => {
             let ffc = 4.0 * (1. - consts::E.powf(-0.025 * bui));

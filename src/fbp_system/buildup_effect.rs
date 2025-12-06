@@ -9,7 +9,7 @@ use super::FbpFuelType;
 /// Returns the buildup effect
 ///
 /// ```
-/// # use cffdrs::fbp::{buildup_effect, FbpFuelType};
+/// # use cffdrs::fbp_system::{buildup_effect, FbpFuelType};
 /// # {
 /// let bui = 13.5;
 /// let buildup_effect = buildup_effect(FbpFuelType::C3, bui);
