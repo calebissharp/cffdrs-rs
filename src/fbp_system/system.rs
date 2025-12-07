@@ -3,8 +3,8 @@ use std::f64::consts::PI;
 use crate::{fwi_system::HourlyFwiValues, weather::Weather};
 
 use super::{
-    crown_base_height, crown_fuel_consumption, crown_fuel_load, fire_intensity,
-    foliar_moisture_content, length_to_breadth,
+    crown_fuel_consumption, crown_fuel_load, fire_intensity, foliar_moisture_content,
+    length_to_breadth,
     ros::{back_rate_of_spread, flank_rate_of_spread, rate_of_spread_extended},
     slope_adjustment, surface_fuel_consumption, total_fuel_consumption, FbpFuelType,
 };
@@ -52,6 +52,14 @@ pub struct FbpOptions {
     pub slope: f64,
     /// Slope azimuth (degrees)
     pub aspect: f64,
+    /// Curing constant (%)
+    pub curing: f64,
+    /// Percent conifer (%)
+    pub percent_conifer: f64,
+    /// Percent dead balsam fir (%)
+    pub percent_dead_balsam: f64,
+    /// Crown base height (m) - can be calculated with the [`crown_base_height()`][crate::fbp_system::crown_base_height()] function
+    pub crown_base_height: f64,
 }
 
 impl Default for FbpOptions {
@@ -61,6 +69,10 @@ impl Default for FbpOptions {
             date_of_minimum_fmc: None,
             slope: 0.,
             aspect: 0.,
+            curing: 80.,
+            percent_conifer: 50.,
+            percent_dead_balsam: 35.,
+            crown_base_height: 0.,
         }
     }
 }
@@ -72,17 +84,9 @@ pub fn calculate_fbp(
     weather: &Weather,
     options: FbpOptions,
 ) -> FbpValues {
-    let pc = 50.;
-    let cc = 80.;
-    let pdf = 35.;
-    let sd = 0.;
-    let sh = 0.;
-
     let julian_date = julian::Date::from(weather.time.naive_utc().date());
     let lat = weather.location.y();
     let long = weather.location.x();
-
-    let cbh = crown_base_height(fuel_type, sd, sh);
 
     let fmc = foliar_moisture_content(
         lat,
@@ -103,21 +107,46 @@ pub fn calculate_fbp(
         options.aspect.to_radians(),
         fmc,
         sfc,
-        pc,
-        pdf,
-        cc,
-        cbh,
+        options.percent_conifer,
+        options.percent_dead_balsam,
+        options.curing,
+        options.crown_base_height,
     );
 
-    let ros = rate_of_spread_extended(fuel_type, fwi.isi, fwi.bui, fmc, sfc, pc, pdf, cc, cbh);
+    let ros = rate_of_spread_extended(
+        fuel_type,
+        fwi.isi,
+        fwi.bui,
+        fmc,
+        sfc,
+        options.percent_conifer,
+        options.percent_dead_balsam,
+        options.curing,
+        options.crown_base_height,
+    );
     let bros = back_rate_of_spread(
-        fuel_type, fwi.ffmc, fwi.bui, wsv, fmc, sfc, pc, pdf, cc, cbh,
+        fuel_type,
+        fwi.ffmc,
+        fwi.bui,
+        wsv,
+        fmc,
+        sfc,
+        options.percent_conifer,
+        options.percent_dead_balsam,
+        options.curing,
+        options.crown_base_height,
     );
     let lb = length_to_breadth(fuel_type, wsv);
     let fros = flank_rate_of_spread(ros.ros, bros, lb);
 
     let cfl = crown_fuel_load(fuel_type);
-    let cfc = crown_fuel_consumption(fuel_type, cfl, ros.cfb, pc, pdf);
+    let cfc = crown_fuel_consumption(
+        fuel_type,
+        cfl,
+        ros.cfb,
+        options.percent_conifer,
+        options.percent_dead_balsam,
+    );
     let tfc = total_fuel_consumption(sfc, cfc);
 
     let fi = fire_intensity(tfc, ros.ros);
@@ -135,7 +164,7 @@ pub fn calculate_fbp(
         cfc,
         tfc,
         cfl,
-        cbh,
+        cbh: options.crown_base_height,
         wsv,
         wsz,
         fi,
@@ -148,7 +177,10 @@ mod tests {
     use chrono::prelude::*;
 
     use super::*;
-    use crate::fwi_system::{calculate_hourly, StartingFwiValues};
+    use crate::{
+        fbp_system::crown_base_height,
+        fwi_system::{calculate_hourly, StartingFwiValues},
+    };
 
     #[test]
     fn test_calculate_fbp() -> Result<(), Box<dyn std::error::Error>> {
@@ -179,6 +211,7 @@ mod tests {
             FbpOptions {
                 aspect: 90.,
                 slope: 10.,
+                crown_base_height: crown_base_height(fuel_type, 0.0, 0.0),
                 ..Default::default()
             },
         );
