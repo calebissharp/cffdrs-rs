@@ -10,7 +10,7 @@ license = "GPL-2.0-only"
 keywords = ["cffdrs", "fwi", "fbp", "wildfire"]
 
 [dependencies]
-chrono = "0.4.43"
+chrono = "0.4.44"
 geo = "0.32.0"
 julian = { version = "0.7.1", features = ["chrono"] }
 serde = { version = "1.0.228", features = ["serde_derive"], optional = true }
