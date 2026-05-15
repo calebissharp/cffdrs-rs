@@ -14,6 +14,9 @@ mod surface_fuel_consumption;
 mod system;
 mod total_fuel_consumption;
 
+#[cfg(feature = "wasm")]
+use wasm_bindgen::prelude::*;
+
 pub mod ros;
 
 pub use buildup_effect::*;
@@ -32,8 +35,8 @@ pub use total_fuel_consumption::*;
 
 #[cfg(feature = "serde")]
 use serde::{Deserialize, Serialize};
-
 #[cfg_attr(feature = "serde", derive(Deserialize, Serialize))]
+#[cfg_attr(feature = "wasm", wasm_bindgen)]
 #[derive(PartialEq, Eq, Hash, Copy, Clone, Debug)]
 pub enum FbpFuelType {
     /// Spruce-Lichen Woodland
